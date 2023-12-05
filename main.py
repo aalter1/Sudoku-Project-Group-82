@@ -59,6 +59,8 @@ while run:
         menu_state = "hard"
     # Easy Mode
     if menu_state == "easy":
+      # Sudoku Gen/ Cell and board
+      
       if exit_button.draw(screen):
         run = False
       if reset_button.draw(screen):
@@ -68,6 +70,8 @@ while run:
       pass
     # Medium Mode
     if menu_state == "medium":
+      # Sudoku Gen/ Cell and board
+      
       if exit_button.draw(screen):
         run = False
       if reset_button.draw(screen):
@@ -76,6 +80,8 @@ while run:
         pass
     # Hard Mode
     if menu_state == "hard":
+      # Sudoku Gen/ Cell and board
+      
       if exit_button.draw(screen):
         run = False
       if reset_button.draw(screen):
