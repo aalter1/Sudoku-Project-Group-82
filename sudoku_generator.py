@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import math, random
 """
 This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by Aarti_Rathi and Ankur Trisal
@@ -518,4 +517,4 @@ def generate_sudoku(size, removed):
   sudoku.remove_cells()
   board = sudoku.get_board()
   return board
->>>>>>> d8e5f7e (Reduced Clutter, Implemented Buttons, Implemented screen UI)
+  
