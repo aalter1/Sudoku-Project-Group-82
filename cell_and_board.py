@@ -1,3 +1,6 @@
+import pygame
+
+
 class Cell:
   def __init__(self, value, row, col, screen):
     self.value = value
@@ -12,7 +15,7 @@ class Cell:
     self.value = value
 
   def draw(self):
-    pass
+    pygame.draw.rect()
 
 class Board:
   def __init__(self, width, height, screen, difficulty):
