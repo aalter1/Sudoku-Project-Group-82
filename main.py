@@ -1,15 +1,15 @@
 import pygame
 import button
-from sudoku_generator import SudokuGenerator
+from sudoku_generator import generate_sudoku
+from cell_and_board import Cell, Board
 
 pygame.init()
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 600
+SCREEN_HEIGHT = 700
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Sudoku")
-
 
 # game variable
 menu_state = "main"
@@ -29,79 +29,89 @@ reset_img = pygame.image.load("img/button_reset.png").convert_alpha()
 restart_img = pygame.image.load("img/button_restart.png").convert_alpha()
 
 # button instances
-easy_button = button.Button(150, 300, easy_img, 1)
-medium_button = button.Button(310, 300, medium_img, 1)
-hard_button = button.Button(510, 300, hard_img, 1)
-exit_button = button.Button(175, 525, exit_img, .75)
-reset_button = button.Button(335, 525, reset_img, .75)
-restart_button = button.Button(525, 525, restart_img, .75)
+easy_button = button.Button(50, 500, easy_img, 1)
+medium_button = button.Button(205, 500, medium_img, 1)
+hard_button = button.Button(400, 500, hard_img, 1)
+exit_button = button.Button(100, 625, exit_img, .75)
+reset_button = button.Button(225, 625, reset_img, .75)
+restart_button = button.Button(375, 625, restart_img, .75)
+
 
 def draw_text(text, font, text_col, x, y):
-    img = font.render(text, True, text_col)
-    screen.blit(img, (x, y))
+  img = font.render(text, True, text_col)
+  screen.blit(img, (x, y))
 
 
 # game loop
 run = True
 while run:
 
-    screen.fill((52, 78, 91))
+  screen.fill((52, 78, 91))
 
   # Menu state and draw buttons
-    if menu_state == "main":
-      draw_text("Welcome to Sudoku", font, TEXT_COL, 200, 100)
-      draw_text("Select Game Mode:", font, TEXT_COL, 220, 200)
-      if easy_button.draw(screen):
-        menu_state = "easy"
-      if medium_button.draw(screen):
-        menu_state = "medium"
-      if hard_button.draw(screen):
-        menu_state = "hard"
-    # Easy Mode
-    if menu_state == "easy":
-      # Sudoku Gen/ Cell and board
-      
-      if exit_button.draw(screen):
-        run = False
-      if reset_button.draw(screen):
-        pass
-      if restart_button.draw(screen):
-        pass
+  if menu_state == "main":
+    draw_text("Welcome to Sudoku", font, TEXT_COL, 100, 100)
+    draw_text("Select Game Mode:", font, TEXT_COL, 110, 200)
+    if easy_button.draw(screen):
+      menu_state = "easy"
+    if medium_button.draw(screen):
+      menu_state = "medium"
+    if hard_button.draw(screen):
+      menu_state = "hard"
+  # Easy Mode
+  if menu_state == "easy":
+    # Sudoku Gen/ Cell and board
+    board = generate_sudoku(9, 30)
+    cell = Cell(0, 0, 0, screen)
+    cell.draw(screen)
+    grid = Board(600, 600, screen, menu_state)
+    grid.draw(screen)
+    if exit_button.draw(screen):
+      run = False
+    if reset_button.draw(screen):
       pass
-    # Medium Mode
-    if menu_state == "medium":
-      # Sudoku Gen/ Cell and board
-      
-      if exit_button.draw(screen):
-        run = False
-      if reset_button.draw(screen):
-        pass
-      if restart_button.draw(screen):
-        pass
-    # Hard Mode
-    if menu_state == "hard":
-      # Sudoku Gen/ Cell and board
-      
-      if exit_button.draw(screen):
-        run = False
-      if reset_button.draw(screen):
-        pass
-      if restart_button.draw(screen):
-        pass
-    # Player Winner
-    if menu_state == "win":
-      draw_text("Game Won!", font, TEXT_COL, 200, 100)
-      exit_button = button.Button(335, 300, exit_img, 1)
-      if exit_button.draw(screen):
-        run = False
-    # Player Loser
-    if menu_state == "lose":
-      draw_text("Game Over :(", font, TEXT_COL, 200, 100)
+    if restart_button.draw(screen):
+      menu_state = "main"
+  # Medium Mode
+  if menu_state == "medium":
+    # Sudoku Gen/ Cell and board
+    board = generate_sudoku(9, 40)
+    grid = Board(600, 600, screen, menu_state)
+    grid.draw(screen)
+    if exit_button.draw(screen):
+      run = False
+    if reset_button.draw(screen):
+      pass
+    if restart_button.draw(screen):
+      menu_state = "main"
+  # Hard Mode
+  if menu_state == "hard":
+    # Sudoku Gen/ Cell and board
+    board = generate_sudoku(9, 50)
+    grid = Board(600, 600, screen, menu_state)
+    grid.draw(screen)
+    if exit_button.draw(screen):
+      run = False
+    if reset_button.draw(screen):
+      pass
+    if restart_button.draw(screen):
+      menu_state = "main"
+  # Player Winner
+  if menu_state == "win":
+    draw_text("Game Won!", font, TEXT_COL, 200, 100)
+    exit_button = button.Button(335, 300, exit_img, 1)
+    if exit_button.draw(screen):
+      run = False
+  # Player Loser
+  if menu_state == "lose":
+    draw_text("Game Over :(", font, TEXT_COL, 200, 100)
+    restart_button = button.Button(335, 300, restart_img, 1)
+    if restart_button.draw(screen):
+      menu_state = "main"
 
-
-    for event in pygame.event.get():
-      if event.type == pygame.KEYDOWN:
-        pass
-        if event.type == pygame.QUIT:
-            run = False
-    pygame.display.update()
+  for event in pygame.event.get():
+    if event.type == pygame.KEYDOWN:
+      pass
+      if event.type == pygame.QUIT:
+        run = False
+  pygame.display.update()
