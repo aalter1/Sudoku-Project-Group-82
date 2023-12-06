@@ -61,11 +61,11 @@ while run:
   # Easy Mode
   if menu_state == "easy":
     # Sudoku Gen/ Cell and board
-    board = generate_sudoku(9, 30)
-    cell = Cell(0, 0, 0, screen)
-    cell.draw(screen)
     grid = Board(600, 600, screen, menu_state)
-    grid.draw(screen)
+    cell = Cell(0, 66, 66, screen)
+    grid.draw()
+    board = generate_sudoku(9, 30)
+    
     if exit_button.draw(screen):
       run = False
     if reset_button.draw(screen):
@@ -75,9 +75,9 @@ while run:
   # Medium Mode
   if menu_state == "medium":
     # Sudoku Gen/ Cell and board
-    board = generate_sudoku(9, 40)
     grid = Board(600, 600, screen, menu_state)
-    grid.draw(screen)
+    grid.draw()
+    board = generate_sudoku(9, 40)
     if exit_button.draw(screen):
       run = False
     if reset_button.draw(screen):
@@ -87,9 +87,9 @@ while run:
   # Hard Mode
   if menu_state == "hard":
     # Sudoku Gen/ Cell and board
-    board = generate_sudoku(9, 50)
     grid = Board(600, 600, screen, menu_state)
-    grid.draw(screen)
+    grid.draw()
+    board = generate_sudoku(9, 50)
     if exit_button.draw(screen):
       run = False
     if reset_button.draw(screen):
