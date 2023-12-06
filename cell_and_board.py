@@ -8,19 +8,21 @@ class Cell:
     self.row = row
     self.col = col
     self.screen = screen
+    self.sketched_value = 0
 
   def set_cell_value(self, value):
     self.value = value
     
   def set_sketched_value(self, value):
-    self.value = value
+    self.sketched_value = value
 
   def draw(self):
-    pygame.draw.rect(self.screen, (255, 0, 0), (0, 0, self.row, self.col), 1)
-
-def draw(self):
-    pygame.draw.rect(self.screen, (255, 255, 255), (self.col * 67, self.row * 66, 60, 60))
-
+    num_font = pygame.font.Font(None, 40)  # digit 0-9 font
+    if self.value != 0:  # Only render if the cell has a non-zero value
+        digit_surface = num_font.render(str(self.value), 0, (0, 0, 0))
+        digit_rect = digit_surface.get_rect(center=(66 * self.col + 66 // 2, 66 * self.row + 66 // 2))
+        self.screen.blit(digit_surface, digit_rect)
+    
 class Board:
   def __init__(self, width, height, screen, difficulty):
     self.width = width
@@ -41,11 +43,7 @@ class Board:
       pygame.draw.line(self.screen, (0, 0, 0), (i * 67, 0), (i * 67, self.height), 2)
       pygame.draw.line(self.screen, (0, 0, 0), (0, i * 66), (self.width, i * 66), 2)
       i += 1
-
-    for row in range(10):
-      for col in range(10):
-        cell = Cell(0, row, col, self.screen)
-        grid.draw()
+        
                       
     
   def select(self, row, col):
