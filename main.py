@@ -238,3 +238,13 @@ while run:
           user_modified_board[input_row][input_col] = 0
 
   pygame.display.flip()
+
+
+def win(board):
+  if 0 in board:
+    return False
+  for row in board:
+    row_set = set(row)
+    if len(row_set) != 9:
+      return false
+    col[i] = set(row[i] for row in board)
