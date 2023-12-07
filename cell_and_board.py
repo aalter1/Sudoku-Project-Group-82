@@ -38,19 +38,18 @@ class Board:
 
   def draw(self):
     # draws outer border and outer grid
-    pygame.draw.rect(self.screen, (0, 0, 0), (0, 0, self.width, self.height),
-                     4)
+    pygame.draw.rect(self.screen, (0, 0, 0), (0, 0, self.width, self.height + 10), 4)
     pygame.draw.line(self.screen, (0, 0, 0), (0, 200), (self.width, 200), 4)
     pygame.draw.line(self.screen, (0, 0, 0), (0, 400), (self.width, 400), 4)
     pygame.draw.line(self.screen, (0, 0, 0), (200, 0), (200, self.height), 4)
     pygame.draw.line(self.screen, (0, 0, 0), (400, 0), (400, self.height), 4)
     # draws inner grid using loop
     i = 1
-    while (i * 66) < 620:
+    while (i * 67) < 620:
       pygame.draw.line(self.screen, (0, 0, 0), (i * 67, 0),
                        (i * 67, self.height), 2)
-      pygame.draw.line(self.screen, (0, 0, 0), (0, i * 66),
-                       (self.width, i * 66), 2)
+      pygame.draw.line(self.screen, (0, 0, 0), (0, i * 67),
+                       (self.width, i * 67), 2)
       i += 1
 
   def select(self, row, col):

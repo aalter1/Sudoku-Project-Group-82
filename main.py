@@ -42,6 +42,41 @@ reset_button = button.Button(225, 625, reset_img, .75)
 restart_button = button.Button(375, 625, restart_img, .75)
 
 
+#check for win or loss
+def is_win(given_board):
+  # Check each row
+  for row in given_board:
+    row_set = set()
+    for num in row:
+      if num != 0:
+        if num in row_set:
+          return False
+        row_set.add(num)
+
+  # Check each column
+  for col in range(9):
+    col_set = set()
+    for row in range(9):
+      num = given_board[row][col]
+      if num != 0:
+        if num in col_set:
+          return False
+        col_set.add(num)
+
+  # Check each box
+  for i in range(0, 9, 3):
+    for j in range(0, 9, 3):
+      box_set = set()
+      for row in range(3):
+        for col in range(3):
+          num = given_board[i + row][j + col]
+          if num != 0:
+            if num in box_set:
+              return False
+            box_set.add(num)
+  return True
+
+
 # Function to place text on window
 def draw_text(text, font, text_col, x, y):
   img = font.render(text, True, text_col)
@@ -99,8 +134,11 @@ while run:
   # menu color
   screen.fill((52, 78, 91))
 
+  # Check for win or lose
+
   # Menu state and draw buttons
   if menu_state == "main":
+    restart_button = button.Button(375, 625, restart_img, .75)
     draw_text("Welcome to Sudoku", font, TEXT_COL, 100, 100)
     draw_text("Select Game Mode:", font, TEXT_COL, 110, 200)
     if easy_button.draw(screen):
@@ -131,12 +169,17 @@ while run:
     elif restart_button.draw(screen):
       gen = False
       menu_state = "main"
-    # full_board = board.fill_values()
-    #if 0 not in user_modified_board:
-    #if user_modified_board == board.fill_values()
-    #menu_state = "win"
-    #else:
-    #menu_state = "lose"
+    check_for_win = True
+    for row in board:
+      if 0 in row:
+        check_for_win = False
+        break
+    if check_for_win:
+      gen = False
+      if is_win(board):
+        menu_state = "win"
+      else:
+        menu_state = "lose"
 
   # Medium Mode
   elif menu_state == "medium":
@@ -148,12 +191,17 @@ while run:
     if restart_button.draw(screen):
       gen = False
       menu_state = "main"
-      # full_board = board.fill_values()
-      #if 0 not in user_modified_board:
-      #if user_modified_board == board.fill_values()
-      #menu_state = "win"
-      #else:
-      #menu_state = "lose"
+    check_for_win = True
+    for row in board:
+      if 0 in row:
+        check_for_win = False
+        break
+    if check_for_win:
+      gen = False
+      if is_win(board):
+        menu_state = "win"
+      else:
+        menu_state = "lose"
 
   # Hard Mode
   elif menu_state == "hard":
@@ -165,24 +213,29 @@ while run:
     elif restart_button.draw(screen):
       gen = False
       menu_state = "main"
-      # full_board = board.fill_values()
-      #if 0 not in user_modified_board:
-      #if user_modified_board == board.fill_values()
-      #menu_state = "win"
-      #else:
-      #menu_state = "lose"
+    check_for_win = True
+    for row in board:
+      if 0 in row:
+        check_for_win = False
+        break
+    if check_for_win:
+      gen = False
+      if is_win(board):
+        menu_state = "win"
+      else:
+        menu_state = "lose"
 
   # Player Winner
   elif menu_state == "win":
     draw_text("Game Won!", font, TEXT_COL, 200, 100)
-    exit_button = button.Button(335, 300, exit_img, 1)
+    exit_button = button.Button(250, 300, exit_img, 1)
     if exit_button.draw(screen):
       run = False
 
   # Player Loser
   elif menu_state == "lose":
-    draw_text("Game Over :(", font, TEXT_COL, 200, 100)
-    restart_button = button.Button(335, 300, restart_img, 1)
+    draw_text("Game Over :(", font, TEXT_COL, 175, 100)
+    restart_button = button.Button(200, 300, restart_img, 1)
     if restart_button.draw(screen):
       menu_state = "main"
 
@@ -238,13 +291,3 @@ while run:
           user_modified_board[input_row][input_col] = 0
 
   pygame.display.flip()
-
-
-def win(board):
-  if 0 in board:
-    return False
-  for row in board:
-    row_set = set(row)
-    if len(row_set) != 9:
-      return false
-    col[i] = set(row[i] for row in board)
